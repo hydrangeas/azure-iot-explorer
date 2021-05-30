@@ -17,8 +17,11 @@ import '../../css/_headerPane.scss';
 export const SettingsPane: React.FC = () => {
     const [ showPanel, setShowPanel ] = React.useState<boolean>(false);
     const [ darkTheme, setDarkTheme ] = React.useState<boolean>(false);
-    const [ language, setLanguage ] = React.useState<string>('en');
+
+    const userLanguage = JSON.parse(localStorage.getItem('userLanguage')) || 'en';
+    const [ language, setLanguage ] = React.useState<string>(userLanguage);
     const { t, i18n } = useTranslation();
+
     const { updateTheme } = useThemeContext();
 
     React.useEffect(() => {
@@ -28,6 +31,7 @@ export const SettingsPane: React.FC = () => {
 
     React.useEffect(() => {
         i18n.changeLanguage(language);
+        localStorage.setItem('userLanguage', JSON.stringify(language));
         // tslint:disable-next-line:no-console
         console.log(language);
     },              [language, i18n]);
