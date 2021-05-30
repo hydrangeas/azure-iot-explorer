@@ -22,8 +22,8 @@ export const SettingsPane: React.FC = () => {
           label: 'Choose Language',
           value: 'Choose Language'
         },
-        { label: 'C-3PO', value: 'C-3PO' },
-        { label: 'R2-D2', value: 'R2-D2' }
+        { label: 'English', value: 'en' },
+        { label: '日本語', value: 'ja' }
     ]);
     const { t } = useTranslation();
     const { updateTheme } = useThemeContext();
