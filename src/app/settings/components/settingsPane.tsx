@@ -17,21 +17,20 @@ import '../../css/_headerPane.scss';
 export const SettingsPane: React.FC = () => {
     const [ showPanel, setShowPanel ] = React.useState<boolean>(false);
     const [ darkTheme, setDarkTheme ] = React.useState<boolean>(false);
-    const [ languages ] = React.useState([
-        {
-          label: 'Choose Language',
-          value: 'Choose Language'
-        },
-        { label: 'English', value: 'en' },
-        { label: '日本語', value: 'ja' }
-    ]);
-    const { t } = useTranslation();
+    const [ language, setLanguage ] = React.useState<string>('en');
+    const { t, i18n } = useTranslation();
     const { updateTheme } = useThemeContext();
 
     React.useEffect(() => {
         const theme = localStorage.getItem(THEME_SELECTION);
         setDarkTheme(theme === Theme.dark || theme === Theme.highContrastBlack);
-    },              []);
+    },              [darkTheme]);
+
+    React.useEffect(() => {
+        i18n.changeLanguage(language);
+        // tslint:disable-next-line:no-console
+        console.log(language);
+    },              [language, i18n]);
 
     const togglePanelVisibility = () => {
         setShowPanel(!showPanel);
@@ -41,6 +40,10 @@ export const SettingsPane: React.FC = () => {
         const newDarkTheme = !darkTheme;
         setDarkTheme(newDarkTheme);
         updateTheme(newDarkTheme);
+    };
+
+    const handleChange = (newValue: React.SetStateAction<string>) => {
+        setLanguage(newValue);
     };
 
     const renderFooter = () => {
@@ -113,15 +116,12 @@ export const SettingsPane: React.FC = () => {
                 </section>
                 <section aria-label="Language">
                     <h3 role="heading" aria-level={1}>Language</h3>
-                    <select>
-                        {languages.map(item => (
-                        <option
-                            key={item.value}
-                            value={item.value}
-                        >
-                            {item.label}
-                        </option>
-                        ))}
+                    <select
+                        value={language}
+                        onChange={e => handleChange(e.target.value)}
+                    >
+                        <option key="en" value="en">English</option>
+                        <option key="ja" value="ja">日本語</option>
                     </select>
                 </section>
             </Panel>
