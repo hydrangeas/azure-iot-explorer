@@ -16,7 +16,15 @@ import '../../css/_headerPane.scss';
 
 export const SettingsPane: React.FC = () => {
     const [ showPanel, setShowPanel ] = React.useState<boolean>(false);
-    const [ darkTheme, setDarkTheme] = React.useState<boolean>(false);
+    const [ darkTheme, setDarkTheme ] = React.useState<boolean>(false);
+    const [ languages ] = React.useState([
+        {
+          label: 'Choose Language',
+          value: 'Choose Language'
+        },
+        { label: 'C-3PO', value: 'C-3PO' },
+        { label: 'R2-D2', value: 'R2-D2' }
+    ]);
     const { t } = useTranslation();
     const { updateTheme } = useThemeContext();
 
@@ -102,6 +110,19 @@ export const SettingsPane: React.FC = () => {
                         onChange={toggleTheme}
                         checked={darkTheme}
                     />
+                </section>
+                <section aria-label="Language">
+                    <h3 role="heading" aria-level={1}>Language</h3>
+                    <select>
+                        {languages.map(item => (
+                        <option
+                            key={item.value}
+                            value={item.value}
+                        >
+                            {item.label}
+                        </option>
+                        ))}
+                    </select>
                 </section>
             </Panel>
         </>
