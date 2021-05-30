@@ -1,0 +1,13 @@
+{
+  "dockerComposeFile": [
+      "../docker-compose.yml"
+  ],
+  // docker-compose.ymlのservice名と一致させる
+  "service": "app",
+  // docker-compose.ymlのvolume targetと一致させる
+  "workspaceFolder": "/app",
+  // オプション
+  "shutdownAction": "stopCompose",
+  "extensions": [
+  ]
+}
